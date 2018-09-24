@@ -8,11 +8,8 @@ import static java.lang.Math.pow;
 public class Polynom {
     private List<Integer> listArray;
 
-    public Polynom(ArrayList list) {
-            for (Object aList : list) {
-                listArray.add((Integer) aList);
-            }
-
+    public Polynom(ArrayList<Integer> list) {
+        this.listArray=list;
     }
 
     public List<Integer> getListArray() {
@@ -25,20 +22,20 @@ public class Polynom {
             polVal += pow(x, i) + listArray.get(i);
         return polVal;
     }
-    public ArrayList plus(ArrayList<Integer> plusList){
-        ArrayList plusResult=new ArrayList();
+    public ArrayList<Integer> plus(ArrayList<Integer> plusList){
+        ArrayList<Integer> plusResult=new ArrayList<>();
         for(int i=0; i<this.listArray.size(); i++)
             plusResult.add(this.listArray.get(i)+plusList.get(i));
         return plusResult;
     }
     public ArrayList minus(ArrayList<Integer> plusList){
-        ArrayList plusResult=new ArrayList();
+        ArrayList<Integer> plusResult=new ArrayList<>();
         for(int i=0; i<this.listArray.size(); i++)
             plusResult.add(this.listArray.get(i)-plusList.get(i));
         return plusResult;
     }
     public ArrayList multiplication(ArrayList<Integer> plusList){
-        ArrayList plusResult=new ArrayList();
+        ArrayList<Integer> plusResult=new ArrayList<>();
         for(int i=0; i<this.listArray.size(); i++)
             plusResult.add(i*2, this.listArray.get(i)*plusList.get(i));
         return plusResult;
