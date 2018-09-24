@@ -40,6 +40,7 @@ public class Polynom {
             plusResult.add(i*2, this.listArray.get(i)*plusList.get(i));
         return plusResult;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
