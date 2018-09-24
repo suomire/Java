@@ -1,3 +1,5 @@
+package task1;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +9,10 @@ public class Polynom {
     private List<Integer> listArray;
 
     public Polynom(ArrayList list) {
-        for (int i = 0; i < list.size(); i++)
-            listArray.add((Integer) list.get(i));
+            for (Object aList : list) {
+                listArray.add((Integer) aList);
+            }
+
     }
 
     public List<Integer> getListArray() {
@@ -24,20 +28,19 @@ public class Polynom {
     public ArrayList plus(ArrayList<Integer> plusList){
         ArrayList plusResult=new ArrayList();
         for(int i=0; i<this.listArray.size(); i++)
-            plusResult.add(this.listArray.get(i).intValue()+plusList.get(i).intValue());
+            plusResult.add(this.listArray.get(i)+plusList.get(i));
         return plusResult;
     }
     public ArrayList minus(ArrayList<Integer> plusList){
         ArrayList plusResult=new ArrayList();
         for(int i=0; i<this.listArray.size(); i++)
-            plusResult.add(this.listArray.get(i).intValue()-plusList.get(i).intValue());
+            plusResult.add(this.listArray.get(i)-plusList.get(i));
         return plusResult;
     }
     public ArrayList multiplication(ArrayList<Integer> plusList){
-        ArrayList<Integer> plusResult=new ArrayList();
-        
+        ArrayList plusResult=new ArrayList();
         for(int i=0; i<this.listArray.size(); i++)
-
+            plusResult.add(i*2, this.listArray.get(i)*plusList.get(i));
         return plusResult;
     }
     @Override
@@ -52,9 +55,7 @@ public class Polynom {
 
     @Override
     public int hashCode() {
-        int result = 0;
-        result = listArray.hashCode() * 2 + 12;
-        return result;
+        return listArray.hashCode() * 2 + 12;
     }
     @Override
     public String toString(){
