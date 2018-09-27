@@ -1,15 +1,19 @@
 package task1;
-
+import static java.lang.Math.pow;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class Main{
+public class Main {
 
-    public static void main(String[] args){
-        List new_list=new ArrayList();
-        int[] indexes={-8, 1, -6, 3, 7};
+    public static void main(String[] args) {
+        ArrayList<Integer> new_list = new ArrayList<>();
+        ArrayList<Integer> test_arrayList = new ArrayList<>();
+        ArrayList<Integer> a;
+        int[] indexes = {-8, 1, -6, 3, 7};
+        int[] testV = {1, 1};
         for (int indexe : indexes) new_list.add(indexe);
-
-        System.out.print(new_list.get(0));
+        for (int indexe : testV) test_arrayList.add(indexe);
+        Polynom testP=new Polynom(new_list);
     }
 }
