@@ -15,5 +15,6 @@ public class Main {
         for (int indexe : indexes) new_list.add(indexe);
         for (int indexe : testV) test_arrayList.add(indexe);
         Polynom testP=new Polynom(new_list);
+        a=testP.division(test_arrayList);
     }
 }
