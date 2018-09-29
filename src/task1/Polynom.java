@@ -33,25 +33,24 @@ public class Polynom {
     public ArrayList<Integer> plus(ArrayList<Integer> plusList) {
         ArrayList<Integer> plusResult = new ArrayList<>();
         try {
-            if(this.listArray.size()!=plusList.size()) throw new IllegalArgumentException("");
+            if (this.listArray.size() != plusList.size()) throw new IllegalArgumentException("");
 
             for (int i = 0; i < this.listArray.size(); i++)
                 plusResult.add(this.listArray.get(i) + plusList.get(i));
-        }
-        catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             System.out.println("addition cannot be done");
         }
         return plusResult;
     }
 
-    public ArrayList minus(ArrayList<Integer> plusList) {
+    public ArrayList<Integer> minus(ArrayList<Integer> plusList) {
         ArrayList<Integer> plusResult = new ArrayList<>();
         for (int i = 0; i < this.listArray.size(); i++)
             plusResult.add(this.listArray.get(i) - plusList.get(i));
         return plusResult;
     }
 
-    public ArrayList multiplication(ArrayList<Integer> plusList) {
+    public ArrayList<Integer> multiplication(ArrayList<Integer> plusList) {
         ArrayList<Integer> plusResult = new ArrayList<>();
 
         for (int i = 0; i < (plusList.size() + this.listArray.size() - 1); i++)
@@ -63,7 +62,7 @@ public class Polynom {
         return plusResult;
     }
 
-    public ArrayList division(ArrayList<Integer> dList) {
+    public ArrayList<Integer> division(ArrayList<Integer> dList) {
 
         ArrayList<Integer> dResult = new ArrayList<>();
         ArrayList<Integer> tempList = new ArrayList<>();
@@ -116,6 +115,19 @@ public class Polynom {
         return dResult;
     }
 
+    public ArrayList remaindedD(ArrayList<Integer> dList) {
+        ArrayList<Integer> listResult;
+        ArrayList<Integer> tempList;
+
+        Polynom temp1 = new Polynom(this.listArray);
+        Polynom temp2 = new Polynom(dList);
+        tempList = temp1.division(dList);
+        listResult = temp1.minus(temp2.multiplication(tempList));
+        listResult.removeAll(Collections.singleton(null));
+
+        return listResult;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -133,6 +145,6 @@ public class Polynom {
 
     @Override
     public String toString() {
-        return String.valueOf(listArray);
+        return this.listArray.toString();
     }
 }

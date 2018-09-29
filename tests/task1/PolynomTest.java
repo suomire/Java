@@ -212,6 +212,104 @@ public final class PolynomTest {
     }
 
     @Test
-    public void equals() {
+    public void remaindedD() {
+        ArrayList<Integer> list_k = new ArrayList<>();
+        ArrayList<Integer> plusList1 = new ArrayList<>();
+        ArrayList<Integer> plusList2 = new ArrayList<>();
+        ArrayList<Integer> plusList3 = new ArrayList<>();
+        ArrayList<Integer> plusList4 = new ArrayList<>();
+        ArrayList<Integer> plusList5 = new ArrayList<>();
+
+        ArrayList<Integer> plusRes1 = new ArrayList<>();
+        ArrayList<Integer> plusRes2 = new ArrayList<>();
+        ArrayList<Integer> plusRes3 = new ArrayList<>();
+        ArrayList<Integer> plusRes4 = new ArrayList<>();
+        ArrayList<Integer> plusRes5 = new ArrayList<>();
+
+        int[] indexes = {-8, 1, -6, 3, 7};
+        int[] plusArray1 = {1, 1, 1, 1, 1};
+        int[] plusArray2 = {-3, -5, -1};
+        int[] plusArray3 = {1, 1};
+        int[] plusArray4 = {1, 2, 1};
+        int[] plusArray5 = {-3, 1};
+
+        int[] plusArrayRes1 = {-15, -6, -13, -4, 0};
+        int[] plusArrayRes2 = {-407, -568, 0, 0, 0};
+        int[] plusArrayRes3 = {-11,  0, 0, 0, 0};
+        int[] plusArrayRes4 = {-17, -6, 0, 0, 0};
+        int[] plusArrayRes5 = {589,  0, 0, 0, 0};
+
+        for (int ind : indexes) list_k.add(ind);
+        for (int k : plusArray1) plusList1.add(k);
+        for (int k : plusArray2) plusList2.add(k);
+        for (int k : plusArray3) plusList3.add(k);
+        for (int k : plusArray4) plusList4.add(k);
+        for (int k : plusArray5) plusList5.add(k);
+
+        for (int k : plusArrayRes1) plusRes1.add(k);
+        for (int k : plusArrayRes2) plusRes2.add(k);
+        for (int k : plusArrayRes3) plusRes3.add(k);
+        for (int k : plusArrayRes4) plusRes4.add(k);
+        for (int k : plusArrayRes5) plusRes5.add(k);
+
+        Polynom poly = new Polynom(list_k);
+
+        assertEquals(plusRes1, poly.remaindedD(plusList1));
+        assertEquals(plusRes2, poly.remaindedD(plusList2));
+        assertEquals(plusRes3, poly.remaindedD(plusList3));
+        assertEquals(plusRes4, poly.remaindedD(plusList4));
+        assertEquals(plusRes5, poly.remaindedD(plusList5));
+
+
     }
+
+    @Test
+    public void equals() {
+        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Integer> list1 = new ArrayList<>();
+        ArrayList<Integer> list2 = new ArrayList<>();
+        ArrayList<Integer> list3 = new ArrayList<>();
+
+        int[] listA = {-8, 1, -6, 3, 7};
+        int[] listA1 = {0, 0, 0, 0, 0};
+        int[] listA2 = {1, 1, 1, 1, 1};
+        int[] listA3 = {-8, -1, -23, -89, -9};
+
+        for (int ex : listA) list.add(ex);
+        for (int ex : listA1) list1.add(ex);
+        for (int ex : listA2) list2.add(ex);
+        for (int ex : listA3) list3.add(ex);
+
+        Polynom poly = new Polynom(list);
+        Polynom poly2 = new Polynom(list);
+        assertTrue(poly.equals(poly2));
+
+        poly = new Polynom(list1);
+        poly2 = new Polynom(list1);
+        assertTrue(poly.equals(poly2));
+
+        poly = new Polynom(list2);
+        poly2 = new Polynom(list2);
+        assertTrue(poly.equals(poly2));
+
+        poly = new Polynom(list3);
+        poly2 = new Polynom(list3);
+        assertTrue(poly.equals(poly2));
+
+        poly = new Polynom(list1);
+        poly2 = new Polynom(list2);
+        assertFalse(poly.equals(poly2));
+
+        poly = new Polynom(list2);
+        poly2 = new Polynom(list3);
+        assertFalse(poly.equals(poly2));
+
+        poly = new Polynom(list3);
+        poly2 = new Polynom(list);
+        assertFalse(poly.equals(poly2));
+
+
+    }
+
+
 }
