@@ -1,13 +1,8 @@
 package task2;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Math.pow;
+import java.util.Arrays;
 
 public class DirInfo {
 
@@ -24,10 +19,9 @@ public class DirInfo {
             tempPath += " " + sdf.format(entry.lastModified());
             tempPath += " " + entry.getTotalSpace();
 
-            tempPath += Convertor(entry.getTotalSpace()) + RWX(rwx);
-
+            tempPath += convertor(entry.getTotalSpace()) + RWX(rwx);
         }
-        System.out.println(folderEntries);
+        System.out.println(Arrays.toString(folderEntries));
         //SORTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
     }
 
@@ -37,8 +31,7 @@ public class DirInfo {
             return 0;
     }
 
-
-    public String Convertor(Long bytes) {
+    public String convertor(Long bytes) {
         String str = "";
         int i = 0;
         long res = bytes / 1024;
@@ -96,8 +89,4 @@ public class DirInfo {
         return str;
     }
 
-
-    public void filesInfo() {
-
-    }
 }
