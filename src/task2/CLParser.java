@@ -33,10 +33,12 @@ public final class CLParser {
         CmdLineParser parser = new CmdLineParser(this);
         try {
             parser.parseArgument(args);
+            DirInfo dirInfo = new DirInfo();
+            dirInfo.r = reverseOut;
+
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             parser.printUsage(System.err);
-            return;
         }
 
 

@@ -8,22 +8,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DirInfo {
+    boolean r;
     ArrayList<String> stringList = new ArrayList<>();
 
-    public void menu(boolean l, boolean h, boolean r, String outputFileName, String inputName) {
+    public void menu(boolean l, boolean h, String outputFileName, String inputName) {
         File folder = new File(inputName);
-        if (l) longFileList(folder, r);
-        if (h) humanReadableFileList(folder, r);
-        else if (!(l == h)) defaultFileList(folder, r);
-        if (outputFileName.equals("")) printOutput(outputFileName, r);
+        if (l) longFileList(folder);
+        if (h) humanReadableFileList(folder);
+        else if (!(l == h)) defaultFileList(folder);
+        if (outputFileName.equals("")) printOutput(outputFileName);
     }
 
-    public void defaultFileList(File folder, boolean r1) {
+    public void defaultFileList(File folder) {
         File[] folderEntries = folder.listFiles();
         for (File folderEntry : folderEntries) System.out.println(folderEntry);
     }
 
-    public void longFileList(File folder, boolean r1) {
+    public void longFileList(File folder) {
         File[] folderEntries = folder.listFiles();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (File entry : folderEntries) {
@@ -37,7 +38,7 @@ public class DirInfo {
         for (String aStringList : stringList) System.out.println(aStringList);
     }
 
-    public void humanReadableFileList(File folder, boolean r1) {
+    public void humanReadableFileList(File folder) {
         File[] folderEntries = folder.listFiles();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (File entry : folderEntries) {
@@ -52,7 +53,7 @@ public class DirInfo {
         for (String aStringList : stringList) System.out.println(aStringList);
     }
 
-    public void printOutput(String outputFileName, boolean r1) {
+    public void printOutput(String outputFileName) {
         try {
             FileWriter fl = new FileWriter(outputFileName, true);
             for (String elem : stringList) {
