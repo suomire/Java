@@ -12,6 +12,9 @@ public class DirInfoTest {
     public void processFilesFromDir() {
         File dir1 = new File("C:\\ol\\cinema4d");
         DirInfo di = new DirInfo();
-        di.createListFiles(dir1);
+        //di.defaultFileList(dir1);
+        //di.longFileList(dir1);
+        //di.humanReadableFileList(dir1);
+        //di.printOutput();
     }
 }

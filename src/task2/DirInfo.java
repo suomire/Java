@@ -1,28 +1,67 @@
 package task2;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DirInfo {
+    ArrayList<String> stringList = new ArrayList<>();
 
-    public void createListFiles(File folder) {
+    public void menu(boolean l, boolean h, boolean r, String outputFileName, String inputName) {
+        File folder = new File(inputName);
+        if (l) longFileList(folder, r);
+        if (h) humanReadableFileList(folder, r);
+        else if (!(l == h)) defaultFileList(folder, r);
+        if (outputFileName.equals("")) printOutput(outputFileName, r);
+    }
 
+    public void defaultFileList(File folder, boolean r1) {
+        File[] folderEntries = folder.listFiles();
+        for (File folderEntry : folderEntries) System.out.println(folderEntry);
+    }
+
+    public void longFileList(File folder, boolean r1) {
         File[] folderEntries = folder.listFiles();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         for (File entry : folderEntries) {
             String rwx = "";
-            long size = entry.getTotalSpace();
-            String tempPath = entry.toString() + "\\ ";
-            tempPath += " " + toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite());
-            rwx += toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite());
-            tempPath += " " + sdf.format(entry.lastModified());
-            tempPath += " " + entry.getTotalSpace();
-
-            tempPath += convertor(entry.getTotalSpace()) + RWX(rwx);
+            String tempPath = entry.toString() + "\\";
+            tempPath += "" + toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite()) + "\\";
+            tempPath += sdf.format(entry.lastModified()) + "\\";
+            tempPath += "" + entry.length();
+            stringList.add(tempPath);
         }
-        System.out.println(Arrays.toString(folderEntries));
-        //SORTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11
+        for (String aStringList : stringList) System.out.println(aStringList);
+    }
+
+    public void humanReadableFileList(File folder, boolean r1) {
+        File[] folderEntries = folder.listFiles();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        for (File entry : folderEntries) {
+            String rwx = "";
+            String tempPath = entry.toString() + "\\";
+            rwx += "" + RWX("" + toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite())) + "\\";
+            tempPath += rwx;
+            tempPath += sdf.format(entry.lastModified()) + "\\";
+            tempPath += convertor(entry.length()) + RWX(rwx);
+            stringList.add(tempPath);
+        }
+        for (String aStringList : stringList) System.out.println(aStringList);
+    }
+
+    public void printOutput(String outputFileName, boolean r1) {
+        try {
+            FileWriter fl = new FileWriter(outputFileName, true);
+            for (String elem : stringList) {
+                fl.write(elem + "\r\n");
+            }
+            fl.flush();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
     public int toBit(boolean b) {
@@ -33,6 +72,8 @@ public class DirInfo {
 
     public String convertor(Long bytes) {
         String str = "";
+        double temp;
+        double tBytes = bytes.doubleValue();
         int i = 0;
         long res = bytes / 1024;
         while (res > 1024) {
@@ -40,18 +81,22 @@ public class DirInfo {
             i++;
         }
         str += res + " ";
-        switch (i) {
+        switch (i + 1) {
             case 0:
-                str = "bytes";
+                temp = tBytes;
+                str = String.format("%.2f", temp) + " bytes";
                 break;
             case 1:
-                str = "Kbytes";
+                temp = tBytes / 1024;
+                str = String.format("%.2f", temp) + " Kbytes";
                 break;
             case 2:
-                str = "Mbytes";
+                temp = tBytes / 1024 / 1024;
+                str = String.format("%.2f", temp) + " Mbytes";
                 break;
             case 3:
-                str = "Gbytes";
+                temp = tBytes / 1024 / 1024 / 1024;
+                str = String.format("%.2f", temp) + " Gbytes";
                 break;
         }
         return str;
