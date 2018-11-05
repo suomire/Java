@@ -7,10 +7,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class DirInfo {
-    boolean r = false;
-    ArrayList<String> stringList = new ArrayList<>();
-    ArrayList<String> lineList = new ArrayList<>();
-    InfoClass ic = new InfoClass();
+    private boolean r = false;
+    private ArrayList<String> stringList = new ArrayList<>();
+    private ArrayList<String> lineList = new ArrayList<>();
+    private InfoClass ic = new InfoClass();
 
     public void menu(boolean l, boolean h, String outputFileName, String inputName) {
         File folder = new File(inputName);
@@ -159,12 +159,14 @@ public class DirInfo {
         return str;
     }
 
-    public void printList(ArrayList<String> list) {
-        String tempPath;
-        for (String line : list) {
+    public void printList() {
+        for (String line : stringList) {
             for (String str : line.split(", ")) {
-                System.out.println(str);
+                System.out.print(str);
+
             }
+            System.out.println();
         }
+
     }
 }

@@ -8,7 +8,11 @@ public class InfoClass {
     String rwx;
     Long length;
     String lastModify;
-
+    InfoClass(){
+        path="";
+        rwx="";
+        length=----;
+    }
     public int toBit(boolean b) {
         if (b) return 1;
         else

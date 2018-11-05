@@ -18,5 +18,6 @@ public class DirInfoTest {
         System.out.println();
         //di.humanReadableFileList(dir1);
         //di.printOutput("C:\\ol\\cinema4d\\output.txt");
+        di.printList();
     }
 }
