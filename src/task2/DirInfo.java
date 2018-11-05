@@ -6,51 +6,99 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class DirInfo {
-    boolean r;
+    boolean r = true;
     ArrayList<String> stringList = new ArrayList<>();
+    ArrayList<String> lineList = new ArrayList<>();
 
     public void menu(boolean l, boolean h, String outputFileName, String inputName) {
         File folder = new File(inputName);
         if (l) longFileList(folder);
         if (h) humanReadableFileList(folder);
         else if (!(l == h)) defaultFileList(folder);
-        if (outputFileName.equals("")) printOutput(outputFileName);
+        //if (outputFileName.equals("")) printOutput(outputFileName);
     }
 
     public void defaultFileList(File folder) {
+        stringList.clear();
         File[] folderEntries = folder.listFiles();
-        for (File folderEntry : folderEntries) System.out.println(folderEntry);
+        for (int i = 0; i < folderEntries.length; i++) {
+            stringList.add(i, folderEntries[i].toString());
+        }
+        if (r) Collections.reverse(stringList);
+        for (String aStringList : stringList) System.out.println(aStringList);
     }
 
     public void longFileList(File folder) {
+        stringList.clear();
         File[] folderEntries = folder.listFiles();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        for (File entry : folderEntries) {
-            String rwx = "";
-            String tempPath = entry.toString() + "\\";
-            tempPath += "" + toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite()) + "\\";
-            tempPath += sdf.format(entry.lastModified()) + "\\";
-            tempPath += "" + entry.length();
-            stringList.add(tempPath);
+        String rwx;
+        String tempPath;
+        if (folderEntries != null) {
+
+            for (File entry : folderEntries) {
+                lineList.clear();
+                lineList.add(entry.toString() + "\\");
+                rwx = "" + toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite()) + "\\";
+                lineList.add(rwx);
+                lineList.add(sdf.format(entry.lastModified()) + "\\");
+                lineList.add(entry.length() + "");
+                if (r) Collections.reverse(lineList);
+                stringList.add(lineList.toString());
+            }
         }
-        for (String aStringList : stringList) System.out.println(aStringList);
+        if (r) {
+            Collections.reverse(stringList);
+            for (String aStringList : stringList) System.out.println(aStringList);
+        } else for (String aStringList : stringList) System.out.println(aStringList);
+
     }
 
     public void humanReadableFileList(File folder) {
+        stringList.clear();
         File[] folderEntries = folder.listFiles();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        for (File entry : folderEntries) {
-            String rwx = "";
-            String tempPath = entry.toString() + "\\";
-            rwx += "" + RWX("" + toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite())) + "\\";
-            tempPath += rwx;
-            tempPath += sdf.format(entry.lastModified()) + "\\";
-            tempPath += convertor(entry.length()) + RWX(rwx);
-            stringList.add(tempPath);
+        String rwx;
+        String tempPath;
+        if (folderEntries != null) {
+
+            for (File entry : folderEntries) {
+                lineList.clear();
+                lineList.add(entry.toString() + "\\");
+                rwx = "" + RWX("" + toBit(entry.canExecute()) + toBit(entry.canRead()) + toBit(entry.canWrite())) + "\\";
+                lineList.add(rwx);
+                lineList.add(sdf.format(entry.lastModified()) + "\\");
+                lineList.add(convertor(entry.length()));
+                if (r) Collections.reverse(lineList);
+                stringList.add(lineList.toString());
+            }
+        } else {
+            lineList.clear();
+            lineList.add(folder.toString() + "\\");
+            rwx = "" + RWX("" + toBit(folder.canExecute()) + toBit(folder.canRead()) + toBit(folder.canWrite())) + "\\";
+            lineList.add(rwx);
+            lineList.add(sdf.format(folder.lastModified()) + "\\");
+            lineList.add(convertor(folder.length()) + RWX(rwx));
+            if (r) Collections.reverse(lineList);
+            stringList.add(lineList.toString());
         }
-        for (String aStringList : stringList) System.out.println(aStringList);
+        System.out.println();
+        for (int i = 0; i < stringList.size(); i++) {
+            System.out.println(stringList.get(i));
+        }
+        for (String line : stringList) {
+            line.replace('[', '!');
+            line.replace(']', ' ');
+            for (String str : line.split(", ")) {
+                //str.replace(' ', ' ');
+                System.out.print(str+"\\");
+            }
+            System.out.println();
+        }
     }
 
     public void printOutput(String outputFileName) {
@@ -135,4 +183,12 @@ public class DirInfo {
         return str;
     }
 
+    public void printList(ArrayList<String> list) {
+        String tempPath;
+        for (String line : list) {
+            for (String str : line.split(", ")) {
+                System.out.println(str);
+            }
+        }
+    }
 }

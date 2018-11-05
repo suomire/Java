@@ -13,8 +13,10 @@ public class DirInfoTest {
         File dir1 = new File("C:\\ol\\cinema4d");
         DirInfo di = new DirInfo();
         //di.defaultFileList(dir1);
+        System.out.println();
         //di.longFileList(dir1);
-        //di.humanReadableFileList(dir1);
-        //di.printOutput();
+        System.out.println();
+        di.humanReadableFileList(dir1);
+        //di.printOutput("C:\\ol\\cinema4d\\output.txt");
     }
 }
