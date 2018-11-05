@@ -4,39 +4,38 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 
 public class InfoClass {
-    String path;
-    String rwx;
-    Long length;
-    String lastModify;
-    InfoClass(){
-        path="";
-        rwx="";
-        length=----;
+    private String path;
+    private String rwx;
+    private Long length;
+    private String lastModify;
+
+    public InfoClass(File folder) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        this.path = folder.getPath();
+        this.rwx = "" + toBit(folder.canExecute()) + toBit(folder.canRead()) + toBit(folder.canWrite());
+        this.length = folder.length();
+        lastModify = sdf.format(folder.lastModified());
     }
+
     public int toBit(boolean b) {
         if (b) return 1;
         else
             return 0;
     }
 
-    public String Path(File folder) {
-        path = folder.getPath();
+    public String getPath() {
         return path;
     }
 
-    public String Rwx(File folder) {
-        rwx = "" + toBit(folder.canExecute()) + toBit(folder.canRead()) + toBit(folder.canWrite());
+    public String getRwx() {
         return rwx;
     }
 
-    public Long Length(File folder) {
-        length = folder.length();
+    public Long getLength() {
         return length;
     }
 
-    public String LastModify(File folder) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        lastModify = sdf.format(folder.lastModified());
+    public String getLastModify() {
         return lastModify;
     }
 }

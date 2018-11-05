@@ -7,29 +7,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class DirInfo {
-    private boolean r = false;
+    private boolean r;
+    private boolean h;
+    private boolean l;
+    private String o;
+
     private ArrayList<String> stringList = new ArrayList<>();
     private ArrayList<String> lineList = new ArrayList<>();
-    private InfoClass ic = new InfoClass();
 
-    public void menu(boolean l, boolean h, String outputFileName, String inputName) {
-        File folder = new File(inputName);
-        if (l) longFileList(folder);
-        if (h) humanReadableFileList(folder);
-        else if (!(l == h)) defaultFileList(folder);
-        if (outputFileName.equals("")) printOutput(outputFileName);
-    }
-
-    public void defaultFileList(File folder) {
-        stringList.clear();
-        File[] folderEntries = folder.listFiles();
-        if (folderEntries != null) {
-            for (int i = 0; i < folderEntries.length; i++) {
-                stringList.add(i, folderEntries[i].toString());
-            }
-            if (r) Collections.reverse(stringList);
-            for (String aStringList : stringList) System.out.println(aStringList);
-        } else System.out.println(folder);
+    public DirInfo(boolean r, boolean h, boolean l, String o) {
+        this.r = r;
+        this.h = h;
+        this.l = l;
+        this.o = o;
     }
 
     public void longFileList(File folder) {
@@ -37,56 +27,54 @@ public class DirInfo {
         File[] folderEntries = folder.listFiles();
         if (folderEntries != null) {
             for (File entry : folderEntries) {
+                InfoClass ic = new InfoClass(entry);
                 lineList.clear();
-                lineList.add(ic.Path(entry) + "\\");
-                lineList.add(ic.Rwx(entry) + "\\");
-                lineList.add(ic.LastModify(entry) + "\\");
-                lineList.add(ic.Length(entry) + "");
+                lineList.add(ic.getPath() + "\\");
+                if (this.h != this.l) {
+                    if (this.l) {
+                        lineList.add(ic.getRwx() + "\\");
+                        lineList.add(ic.getLength() + "\\");
+                    } else {
+                        lineList.add(RWX(ic.getRwx()) + "\\");
+                        lineList.add(convertor(ic.getLength()) + "");
+                    }
+                    lineList.add(ic.getLastModify() + "");
+                }
                 if (r) Collections.reverse(lineList);
                 stringList.add(lineList.toString());
             }
         } else {
+            InfoClass ic = new InfoClass(folder);
             lineList.clear();
-            lineList.add(ic.Path(folder) + "\\");
-            lineList.add(ic.Rwx(folder) + "\\");
-            lineList.add(ic.LastModify(folder) + "\\");
-            lineList.add(ic.Length(folder) + "");
+            lineList.add(ic.getPath() + "\\");
+            if (this.h != this.l) {
+                if (this.l) {
+                    lineList.add(ic.getRwx() + "\\");
+                    lineList.add(ic.getLength() + "\\");
+                } else {
+                    lineList.add(RWX(ic.getRwx()) + "\\");
+                    lineList.add(convertor(ic.getLength()) + "");
+                }
+                lineList.add(ic.getLastModify() + "");
+            }
             if (r) Collections.reverse(lineList);
             stringList.add(lineList.toString());
         }
-        for (String str : stringList) System.out.println(str);
+        if (this.o.equals("")) {
+            printList();
+        }
+        else printOutput(this.o);
     }
 
-    public void humanReadableFileList(File folder) {
-        stringList.clear();
-        File[] folderEntries = folder.listFiles();
-        if (folderEntries != null) {
-            for (File entry : folderEntries) {
-                lineList.clear();
-                lineList.add(ic.Path(entry) + "\\");
-                lineList.add(RWX(ic.Rwx(entry)) + "\\");
-                lineList.add(ic.LastModify(entry) + "\\");
-                lineList.add(convertor(ic.Length(entry)) + "");
-                if (r) Collections.reverse(lineList);
-                stringList.add(lineList.toString());
-            }
-        } else {
-            lineList.clear();
-            lineList.add(ic.Path(folder) + "\\");
-            lineList.add(ic.Rwx(folder) + "\\");
-            lineList.add(ic.LastModify(folder) + "\\");
-            lineList.add(ic.Length(folder) + "");
-            if (r) Collections.reverse(lineList);
-            stringList.add(lineList.toString());
-        }
-        for (String str : stringList) System.out.println(str);
-    }
 
     public void printOutput(String outputFileName) {
         try {
             FileWriter fl = new FileWriter(outputFileName, true);
             for (String elem : stringList) {
-                fl.write(elem + "\r\n");
+                for (String str : elem.split(", ")) {
+                    fl.write(str+" ");
+                }
+                fl.write("\r\n");
             }
             fl.flush();
         } catch (IOException e1) {
@@ -160,10 +148,10 @@ public class DirInfo {
     }
 
     public void printList() {
+        System.out.println("print list");
         for (String line : stringList) {
             for (String str : line.split(", ")) {
                 System.out.print(str);
-
             }
             System.out.println();
         }
