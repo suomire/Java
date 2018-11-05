@@ -7,10 +7,10 @@ import org.kohsuke.args4j.Option;
 
 public final class CLParser {
 
-    @Option(name = "-l", usage = "long format")
+    @Option(name = "-l", usage = "long format", forbids = "-h")
     private boolean longFormat = false;
 
-    @Option(name = "-h", usage = "human-readable format")
+    @Option(name = "-h", usage = "human-readable format", forbids = "-l")
     private boolean hrFormat = false;
 
     @Option(name = "-r", usage = "reverse print")
