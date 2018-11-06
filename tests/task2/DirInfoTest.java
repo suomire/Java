@@ -4,8 +4,6 @@ import org.junit.Test;
 
 import java.io.File;
 
-import static org.junit.Assert.*;
-
 public class DirInfoTest {
 
     @Test
@@ -14,7 +12,7 @@ public class DirInfoTest {
         DirInfo di = new DirInfo(false, true, false, "C:\\ol\\cinema4d\\output.txt");
         //di.defaultFileList(dir1);
         System.out.println();
-        di.longFileList(dir1);
+        di.lineParserLaunch(dir1);
         System.out.println();
         //di.humanReadableFileList(dir1);
         //di.printOutput("C:\\ol\\cinema4d\\output.txt");

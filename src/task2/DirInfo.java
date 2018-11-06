@@ -22,7 +22,7 @@ public class DirInfo {
         this.o = o;
     }
 
-    public void longFileList(File folder) {
+    public void lineParserLaunch(File folder) {
         stringList.clear();
         File[] folderEntries = folder.listFiles();
         if (folderEntries != null) {

@@ -5,7 +5,14 @@ import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 public final class CLParser {
+
+    @Option(name = "ls", usage = "launch command", required = false)
+    private boolean launchCommand = false;
 
     @Option(name = "-l", usage = "long format", forbids = "-h")
     private boolean longFormat = false;
@@ -22,10 +29,8 @@ public final class CLParser {
     @Argument(required = true, metaVar = "Input File", usage = "input file name")
     private String inputFileString = "";
 
-    @Option(name = "ls", usage = "launch command", required = true)
-    private boolean launchCommand = false;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new CLParser().launch(args);
     }
 
@@ -33,7 +38,9 @@ public final class CLParser {
         CmdLineParser parser = new CmdLineParser(this);
         try {
             parser.parseArgument(args);
+            File dir1 = new File(inputFileString);
             DirInfo dirInfo = new DirInfo(reverseOut, hrFormat, longFormat, outputFileName);
+            dirInfo.lineParserLaunch(dir1);
 
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
