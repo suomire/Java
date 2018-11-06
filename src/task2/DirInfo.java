@@ -36,7 +36,7 @@ public class DirInfo {
                         lineList.add(ic.getLength() + "\\");
                     } else {
                         lineList.add(RWX(ic.getRwx()) + "\\");
-                        lineList.add(convertor(ic.getLength()) + "");
+                        lineList.add(converter(ic.getLength()) + "");
                     }
                     lineList.add(ic.getLastModify() + "");
                 }
@@ -53,7 +53,7 @@ public class DirInfo {
                     lineList.add(ic.getLength() + "\\");
                 } else {
                     lineList.add(RWX(ic.getRwx()) + "\\");
-                    lineList.add(convertor(ic.getLength()) + "");
+                    lineList.add(converter(ic.getLength()) + "");
                 }
                 lineList.add(ic.getLastModify() + "");
             }
@@ -62,28 +62,27 @@ public class DirInfo {
         }
         if (this.o.equals("")) {
             printList();
-        }
-        else printOutput(this.o);
+        } else printOutput(this.o);
     }
 
 
     public void printOutput(String outputFileName) {
         try {
-            FileWriter fl = new FileWriter(outputFileName, true);
+            FileWriter fl = new FileWriter(outputFileName, false);
             for (String elem : stringList) {
                 for (String str : elem.split(", ")) {
-                    fl.write(str+" ");
+                    fl.write(str + " ");
                 }
                 fl.write("\r\n");
             }
-            fl.flush();
+            fl.close();
         } catch (IOException e1) {
             e1.printStackTrace();
         }
     }
 
 
-    public String convertor(Long bytes) {
+    public String converter(Long bytes) {
         String str = "";
         double temp;
         double tBytes = bytes.doubleValue();
@@ -148,10 +147,9 @@ public class DirInfo {
     }
 
     public void printList() {
-        System.out.println("print list");
         for (String line : stringList) {
             for (String str : line.split(", ")) {
-                System.out.print(str);
+                System.out.print(str + " ");
             }
             System.out.println();
         }

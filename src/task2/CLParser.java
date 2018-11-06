@@ -7,12 +7,8 @@ import org.kohsuke.args4j.Option;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 public final class CLParser {
-
-    @Option(name = "ls", usage = "launch command", required = false)
-    private boolean launchCommand = false;
 
     @Option(name = "-l", usage = "long format", forbids = "-h")
     private boolean longFormat = false;
@@ -23,7 +19,7 @@ public final class CLParser {
     @Option(name = "-r", usage = "reverse print")
     private boolean reverseOut = false;
 
-    @Option(name = "-o", metaVar = "Output File")
+    @Option(name = "-o", metaVar = "Output File", usage = "output file name")
     private String outputFileName = "";
 
     @Argument(required = true, metaVar = "Input File", usage = "input file name")

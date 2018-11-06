@@ -38,4 +38,5 @@ public class InfoClass {
     public String getLastModify() {
         return lastModify;
     }
+
 }
