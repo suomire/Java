@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 
 public final class CLParser {
-
     @Option(name = "-l", usage = "long format", forbids = "-h")
     private boolean longFormat = false;
 
@@ -22,9 +21,11 @@ public final class CLParser {
     @Option(name = "-o", metaVar = "Output File", usage = "output file name")
     private String outputFileName = "";
 
-    @Argument(required = true, metaVar = "Input File", usage = "input file name")
+    @Argument(required = true, metaVar = "Input File", usage = "input file name", index=1)
     private String inputFileString = "";
 
+    @Argument(required = true, metaVar = "Launch command", usage = "launch")
+    private String ls = "";
 
     public static void main(String[] args) throws IOException {
         new CLParser().launch(args);
