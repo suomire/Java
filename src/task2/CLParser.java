@@ -8,6 +8,32 @@ import org.kohsuke.args4j.Option;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Задача 2. Разработать консольную утилиту, реализующую указанную в задании функциональность,
+ * на языках Java и/или Kotlin. При проектировании использовать объектно-ориентированный подход.
+ * Разработать автоматические тесты для отдельных частей программы.
+ * Написанный код держать в отдельном проекте или модуле в репозитории на GitHub.
+ *
+ * Вывод содержимого указанной в качестве аргумента директории в виде отсортированного списка имен файлов.
+ *
+ * Флаг -l (long) переключает вывод в длинный формат, в котором, кроме имени файла,
+ * указываются права на выполнение/чтение/запись в виде битовой маски XXX,
+ * время последней модификации и размер в байтах.
+ *
+ * Флаг -h (human-readable) переключает вывод в человеко-читаемый формат (размер в кило-, мега-
+ * или гигабайтах, права на выполнение в виде rwx).
+ *
+ * Флаг -r (reverse) меняет порядок вывода на противоположный.
+ *
+ * Флаг -o (output) указывает имя файла, в который следует вывести результат;
+ * если этот флаг отсутствует, результат выводится в консоль.
+ *
+ * В случае, если в качестве аргумента указан файл, а не директория, следует вывести информацию об этом файле.
+ *
+ *
+ * Command Line: ls [-l] [-h] [-r] [-o output.file] directory_or_file
+ */
+
 public final class CLParser {
     @Option(name = "-l", usage = "long format", forbids = "-h")
     private boolean longFormat = false;
@@ -21,7 +47,7 @@ public final class CLParser {
     @Option(name = "-o", metaVar = "Output File", usage = "output file name")
     private String outputFileName = "";
 
-    @Argument(required = true, metaVar = "Input File", usage = "input file name", index=1)
+    @Argument(required = true, metaVar = "Input File", usage = "directory_or_file", index=1)
     private String inputFileString = "";
 
     @Argument(required = true, metaVar = "Launch command", usage = "launch")
@@ -41,6 +67,7 @@ public final class CLParser {
 
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
+            System.err.println("java -jar Java_tasks.jar ls [-l] [-h] [-r] [-o output.file] directory_or_file");
             parser.printUsage(System.err);
         }
 
