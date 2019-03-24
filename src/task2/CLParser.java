@@ -13,24 +13,24 @@ import java.io.IOException;
  * на языках Java и/или Kotlin. При проектировании использовать объектно-ориентированный подход.
  * Разработать автоматические тесты для отдельных частей программы.
  * Написанный код держать в отдельном проекте или модуле в репозитории на GitHub.
- *
+ * <p>
  * Вывод содержимого указанной в качестве аргумента директории в виде отсортированного списка имен файлов.
- *
+ * <p>
  * Флаг -l (long) переключает вывод в длинный формат, в котором, кроме имени файла,
  * указываются права на выполнение/чтение/запись в виде битовой маски XXX,
  * время последней модификации и размер в байтах.
- *
+ * <p>
  * Флаг -h (human-readable) переключает вывод в человеко-читаемый формат (размер в кило-, мега-
  * или гигабайтах, права на выполнение в виде rwx).
- *
+ * <p>
  * Флаг -r (reverse) меняет порядок вывода на противоположный.
- *
+ * <p>
  * Флаг -o (output) указывает имя файла, в который следует вывести результат;
  * если этот флаг отсутствует, результат выводится в консоль.
- *
+ * <p>
  * В случае, если в качестве аргумента указан файл, а не директория, следует вывести информацию об этом файле.
- *
- *
+ * <p>
+ * <p>
  * Command Line: ls [-l] [-h] [-r] [-o output.file] directory_or_file
  */
 
@@ -47,7 +47,7 @@ public final class CLParser {
     @Option(name = "-o", metaVar = "Output File", usage = "output file name")
     private String outputFileName = "";
 
-    @Argument(required = true, metaVar = "Input File", usage = "directory_or_file", index=1)
+    @Argument(required = true, metaVar = "Input File", usage = "directory_or_file", index = 1)
     private String inputFileString = "";
 
     @Argument(required = true, metaVar = "Launch command", usage = "launch")
