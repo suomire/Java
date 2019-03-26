@@ -10,22 +10,24 @@ import static java.lang.Math.pow;
  * Задача 1. Написать класс на языке Java, реализующий указанную ниже функциональность.
  * Написать для этого класса автоматические тесты, покрывающие весь его исходный код.
  * Написанный код держать в отдельном проекте или модуле в репозитории на GitHub.
- *
- *  Объект класса хранит полином вида 7x4+3x3-6x2+x-8. Все коэффициенты -- целые числа.
- *
+ * <p>
+ * Объект класса хранит полином вида 7x4+3x3-6x2+x-8. Все коэффициенты -- целые числа.
+ * <p>
  * Методы: сравнить два полинома на равенство,
  * рассчитать значение при данном (целом) x, сложить / вычесть / умножить / поделить два полинома,
  * найти остаток от деления одного полинома на другой.
  */
 public class Polynom {
 
-    private ArrayList<Integer> listArray = new ArrayList<>();
+    private List<Integer> listArray = new ArrayList<>();
 
     Polynom() {
+
         this.listArray.add(0);
+
     }
 
-    Polynom(ArrayList<Integer> list) {
+    Polynom(List<Integer> list) {
         this.listArray = list;
     }
 
@@ -41,16 +43,19 @@ public class Polynom {
         return polVal;
     }
 
-    public ArrayList<Integer> plus(ArrayList<Integer> plusList) {
-        ArrayList<Integer> plusResult = new ArrayList<>();
+    public Polynom plus(Polynom plusResult) {
+        List<Integer> plusResultList = new ArrayList<>();
+        plusResultList = plusResult.getListArray();
+
         try {
-            if (this.listArray.size() != plusList.size()) throw new IllegalArgumentException("");
+            if (this.listArray.size() != plusResultList.size()) throw new IllegalArgumentException("");
 
             for (int i = 0; i < this.listArray.size(); i++)
-                plusResult.add(this.listArray.get(i) + plusList.get(i));
+                plusResultList.add(this.listArray.get(i) + plusResultList.get(i));
         } catch (IllegalArgumentException e) {
             System.out.println("addition cannot be done");
         }
+        plusResult = new Polynom(plusResultList);
         return plusResult;
     }
 
@@ -121,7 +126,7 @@ public class Polynom {
                 }
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("HUI");
+            System.out.println("");
         }
         return dResult;
     }
