@@ -44,26 +44,25 @@ public class Polynom {
     }
 
     public Polynom plus(Polynom plusResult) {
-        List<Integer> plusResultList = new ArrayList<>();
-        plusResultList = plusResult.getListArray();
+        List<Integer> plusResultList = plusResult.getListArray();
 
         try {
-            if (this.listArray.size() != plusResultList.size()) throw new IllegalArgumentException("");
-
+            if (this.listArray.size() != plusResultList.size()){
+                throw new IllegalArgumentException("the sizes of the polynomials are different");
+            }
             for (int i = 0; i < this.listArray.size(); i++)
                 plusResultList.add(this.listArray.get(i) + plusResultList.get(i));
         } catch (IllegalArgumentException e) {
             System.out.println("addition cannot be done");
         }
-        plusResult = new Polynom(plusResultList);
-        return plusResult;
+        return new Polynom(plusResultList);
     }
 
-    public ArrayList<Integer> minus(ArrayList<Integer> plusList) {
-        ArrayList<Integer> plusResult = new ArrayList<>();
+    public Polynom minus(Polynom plusList) {
+        List<Integer> plusResult = plusList.getListArray();
         for (int i = 0; i < this.listArray.size(); i++)
-            plusResult.add(this.listArray.get(i) - plusList.get(i));
-        return plusResult;
+            plusResult.add(this.listArray.get(i) - plusResult.get(i));
+        return new Polynom(plusResult);
     }
 
     public ArrayList<Integer> multiplication(ArrayList<Integer> plusList) {
