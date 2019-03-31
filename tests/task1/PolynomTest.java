@@ -3,7 +3,6 @@ package task1;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +23,7 @@ public final class PolynomTest {
     }
 
     @Test
-    public void plus() {
+    public void addition() {
         ArrayList<Integer> list_k = new ArrayList<>();
         ArrayList<Integer> plusList = new ArrayList<>();
         ArrayList<Integer> plusList1 = new ArrayList<>();
@@ -56,11 +55,15 @@ public final class PolynomTest {
         for (int k : plusArrayRes3) plusRes3.add(k);
 
         Polynom poly = new Polynom(list_k);
+        Polynom polyPlus = new Polynom(plusList);
+        Polynom polyPlus1 = new Polynom(plusList1);
+        Polynom polyPlus2= new Polynom(plusList2);
+        Polynom polyPlus3 = new Polynom(plusList3);
 
-        assertEquals(list_k, poly.plus(plusList));
-        assertEquals(plusRes1, poly.plus(plusList1));
-        assertEquals(plusRes2, poly.plus(plusList2));
-        assertEquals(plusRes3, poly.plus(plusList3));
+        assertEquals(list_k, poly.addition(polyPlus).getListArray());
+        assertEquals(plusRes1, poly.addition(polyPlus1).getListArray());
+        assertEquals(plusRes2, poly.addition(polyPlus2).getListArray());
+        assertEquals(plusRes3, poly.addition(polyPlus3).getListArray());
     }
 
     @Test
@@ -96,11 +99,16 @@ public final class PolynomTest {
         for (int k : plusArrayRes3) plusRes3.add(k);
 
         Polynom poly = new Polynom(list_k);
+        Polynom polyPlus = new Polynom(plusList);
+        Polynom polyPlus1 = new Polynom(plusList1);
+        Polynom polyPlus2= new Polynom(plusList2);
+        Polynom polyPlus3 = new Polynom(plusList3);
 
-        assertEquals(list_k, poly.minus(plusList));
-        assertEquals(plusRes1, poly.minus(plusList1));
-        assertEquals(plusRes2, poly.minus(plusList2));
-        assertEquals(plusRes3, poly.minus(plusList3));
+
+        assertEquals(list_k, poly.substraction(polyPlus).getListArray());
+        assertEquals(plusRes1, poly.substraction(polyPlus1).getListArray());
+        assertEquals(plusRes2, poly.substraction(polyPlus2).getListArray());
+        assertEquals(plusRes3, poly.substraction(polyPlus3).getListArray());
     }
 
     @Test
@@ -151,13 +159,19 @@ public final class PolynomTest {
         for (int k : plusArrayRes5) plusRes5.add(k);
 
         Polynom poly = new Polynom(list_k);
+        Polynom polyPlus = new Polynom(plusList);
+        Polynom polyPlus1 = new Polynom(plusList1);
+        Polynom polyPlus2= new Polynom(plusList2);
+        Polynom polyPlus3 = new Polynom(plusList3);
+        Polynom polyPlus4= new Polynom(plusList4);
+        Polynom polyPlus5 = new Polynom(plusList5);
 
-        assertEquals(plusRes, poly.multiplication(plusList));
-        assertEquals(plusRes1, poly.multiplication(plusList1));
-        assertEquals(plusRes2, poly.multiplication(plusList2));
-        assertEquals(plusRes3, poly.multiplication(plusList3));
-        assertEquals(plusRes4, poly.multiplication(plusList4));
-        assertEquals(plusRes5, poly.multiplication(plusList5));
+        assertEquals(plusRes, poly.multiplication(polyPlus).getListArray());
+        assertEquals(plusRes1, poly.multiplication(polyPlus1).getListArray());
+        assertEquals(plusRes2, poly.multiplication(polyPlus2).getListArray());
+        assertEquals(plusRes3, poly.multiplication(polyPlus3).getListArray());
+        assertEquals(plusRes4, poly.multiplication(polyPlus4).getListArray());
+        assertEquals(plusRes5, poly.multiplication(polyPlus5).getListArray());
     }
 
     @Test
@@ -202,12 +216,17 @@ public final class PolynomTest {
         for (int k : plusArrayRes5) plusRes5.add(k);
 
         Polynom poly = new Polynom(list_k);
+        Polynom polyPlus1 = new Polynom(plusList1);
+        Polynom polyPlus2= new Polynom(plusList2);
+        Polynom polyPlus3 = new Polynom(plusList3);
+        Polynom polyPlus4= new Polynom(plusList4);
+        Polynom polyPlus5 = new Polynom(plusList5);
 
-        assertEquals(plusRes1, poly.division(plusList1));
-        assertEquals(plusRes2, poly.division(plusList2));
-        assertEquals(plusRes3, poly.division(plusList3));
-        assertEquals(plusRes4, poly.division(plusList4));
-        assertEquals(plusRes5, poly.division(plusList5));
+        assertEquals(plusRes1, poly.division(polyPlus1).getListArray());
+        assertEquals(plusRes2, poly.division(polyPlus2).getListArray());
+        assertEquals(plusRes3, poly.division(polyPlus3).getListArray());
+        assertEquals(plusRes4, poly.division(polyPlus4).getListArray());
+        assertEquals(plusRes5, poly.division(polyPlus5).getListArray());
 
     }
 
@@ -253,12 +272,17 @@ public final class PolynomTest {
         for (int k : plusArrayRes5) plusRes5.add(k);
 
         Polynom poly = new Polynom(list_k);
+        Polynom polyPlus1 = new Polynom(plusList1);
+        Polynom polyPlus2= new Polynom(plusList2);
+        Polynom polyPlus3 = new Polynom(plusList3);
+        Polynom polyPlus4= new Polynom(plusList4);
+        Polynom polyPlus5 = new Polynom(plusList5);
 
-        assertEquals(plusRes1, poly.remaindedD(plusList1));
-        assertEquals(plusRes2, poly.remaindedD(plusList2));
-        assertEquals(plusRes3, poly.remaindedD(plusList3));
-        assertEquals(plusRes4, poly.remaindedD(plusList4));
-        assertEquals(plusRes5, poly.remaindedD(plusList5));
+        assertEquals(plusRes1, poly.remaindedD(polyPlus1).getListArray());
+        assertEquals(plusRes2, poly.remaindedD(polyPlus2).getListArray());
+        assertEquals(plusRes3, poly.remaindedD(polyPlus3).getListArray());
+        assertEquals(plusRes4, poly.remaindedD(polyPlus4).getListArray());
+        assertEquals(plusRes5, poly.remaindedD(polyPlus5).getListArray());
 
 
     }

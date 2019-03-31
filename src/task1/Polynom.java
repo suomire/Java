@@ -43,104 +43,90 @@ public class Polynom {
         return polVal;
     }
 
-    public Polynom plus(Polynom plusResult) {
-        List<Integer> plusResultList = plusResult.getListArray();
-
-        try {
-            if (this.listArray.size() != plusResultList.size()){
-                throw new IllegalArgumentException("the sizes of the polynomials are different");
-            }
-            for (int i = 0; i < this.listArray.size(); i++)
-                plusResultList.add(this.listArray.get(i) + plusResultList.get(i));
-        } catch (IllegalArgumentException e) {
-            System.out.println("addition cannot be done");
+    public Polynom addition(Polynom polynom) {
+        List<Integer> list = new ArrayList<>();
+        if (this.listArray.size() != polynom.getListArray().size()) {
+            throw new IllegalArgumentException("the sizes of the polynomials are different");
         }
-        return new Polynom(plusResultList);
-    }
-
-    public Polynom minus(Polynom plusList) {
-        List<Integer> plusResult = plusList.getListArray();
         for (int i = 0; i < this.listArray.size(); i++)
-            plusResult.add(this.listArray.get(i) - plusResult.get(i));
-        return new Polynom(plusResult);
+            list.add(this.listArray.get(i) + polynom.getListArray().get(i));
+        return new Polynom(list);
     }
 
-    public ArrayList<Integer> multiplication(ArrayList<Integer> plusList) {
-        ArrayList<Integer> plusResult = new ArrayList<>();
-
-        for (int i = 0; i < (plusList.size() + this.listArray.size() - 1); i++)
-            plusResult.add(i, 0);
+    public Polynom substraction(Polynom polynom) {
+        List<Integer> list = new ArrayList<>();
+        if (this.listArray.size() != polynom.getListArray().size()) {
+            throw new IllegalArgumentException("the sizes of the polynomials are different");
+        }
         for (int i = 0; i < this.listArray.size(); i++)
-            for (int j = 0; j < plusList.size(); j++)
-                plusResult.set(i + j, plusResult.get(i + j) + plusList.get(j) * this.listArray.get(i));
-
-        return plusResult;
+            list.add(this.listArray.get(i) - polynom.getListArray().get(i));
+        return new Polynom(list);
     }
 
-    public ArrayList<Integer> division(ArrayList<Integer> dList) {
+    public Polynom multiplication(Polynom polynom) {
+        List<Integer> list = new ArrayList<>();
+        List<Integer> temp = polynom.getListArray();
+        for (int i = 0; i < (temp.size() + this.listArray.size() - 1); i++)
+            list.add(i, 0);
+        for (int i = 0; i < this.listArray.size(); i++)
+            for (int j = 0; j < temp.size(); j++)
+                list.set(i + j, list.get(i + j) + temp.get(j) * this.listArray.get(i));
 
+        return new Polynom(list);
+    }
+
+    public Polynom division(Polynom dList) {
         ArrayList<Integer> dResult = new ArrayList<>();
         ArrayList<Integer> tempList = new ArrayList<>();
-        try {
-            if (this.listArray.size() < dList.size() || dList.size() == 1)
-                throw new IllegalArgumentException("");
+        if (this.listArray.size() < dList.getListArray().size() || dList.getListArray().size() == 1)
+            throw new IllegalArgumentException("the sizes of the polynomials are different");
 
-            for (int i = 0; i < (this.listArray.size() - dList.size() + 1); i++) {
-                dResult.add(i, 0);
-            }
-            for (int i = 0; i < dList.size(); i++) {
-                tempList.add(i, 0);
-            }
-            int addIndex;
-            int elemValue;
-
-
-            //цикл по делимому
-            for (int i = (this.listArray.size() - 1); i >= 0; i--) {
-                if (i - dList.size() + 1 >= 0) {
-                    // цикл для определения области деления, размерность области равна размерности делителя
-                    if (i == this.listArray.size() - 1) {
-                        //задаю вспомогательный лист для нахождения остатка от деления
-                        int j = tempList.size() - 1;
-                        while (j >= 0) {
-                            for (int k = i; k > i - tempList.size(); k--) {
-                                tempList.set(j, this.listArray.get(k));
-                                j--;
-                            }
-                        }
-                    }
-
-                    addIndex = i - dList.size() + 1;
-                    elemValue = tempList.get(tempList.size() - 1) / dList.get(dList.size() - 1);
-                    dResult.set(addIndex, elemValue);
-                    // переопределение области деления, вычитание + сдвиг
-                    for (int j = 0; j < dList.size(); j++) {
-                        tempList.set(j, tempList.get(j) - dResult.get(addIndex) * dList.get(j));
-                        if (tempList.get(j) == 0 && (i - tempList.size() >= 0)) {
-                            tempList.set(j, null);
-                            tempList.add(0, this.listArray.get(i - tempList.size()));
-                        }
-                    }
-                    tempList.removeAll(Collections.singleton(null));
-                }
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("");
+        for (int i = 0; i < (this.listArray.size() - dList.getListArray().size() + 1); i++) {
+            dResult.add(i, 0);
         }
-        return dResult;
+        for (int i = 0; i < dList.getListArray().size(); i++) {
+            tempList.add(i, 0);
+        }
+        int addIndex;
+        int elemValue;
+        //цикл по делимому
+        for (int i = (this.listArray.size() - 1); i >= 0; i--) {
+            if (i - dList.getListArray().size() + 1 >= 0) {
+                // цикл для определения области деления, размерность области равна размерности делителя
+                if (i == this.listArray.size() - 1) {
+                    //задаю вспомогательный лист для нахождения остатка от деления
+                    int j = tempList.size() - 1;
+                    while (j >= 0) {
+                        for (int k = i; k > i - tempList.size(); k--) {
+                            tempList.set(j, this.listArray.get(k));
+                            j--;
+                        }
+                    }
+                }
+
+                addIndex = i - dList.getListArray().size() + 1;
+                elemValue = tempList.get(tempList.size() - 1) /
+                        dList.getListArray().get(dList.getListArray().size() - 1);
+                dResult.set(addIndex, elemValue);
+                // переопределение области деления, вычитание + сдвиг
+                for (int j = 0; j < dList.getListArray().size(); j++) {
+                    tempList.set(j, tempList.get(j) - dResult.get(addIndex) * dList.getListArray().get(j));
+                    if (tempList.get(j) == 0 && (i - tempList.size() >= 0)) {
+                        tempList.set(j, null);
+                        tempList.add(0, this.listArray.get(i - tempList.size()));
+                    }
+                }
+                tempList.removeAll(Collections.singleton(null));
+            }
+        }
+        return new Polynom(dResult);
     }
 
-    public ArrayList remaindedD(ArrayList<Integer> dList) {
-        ArrayList<Integer> listResult;
-        ArrayList<Integer> tempList;
-
-        Polynom temp1 = new Polynom(this.listArray);
-        Polynom temp2 = new Polynom(dList);
-        tempList = temp1.division(dList);
-        listResult = temp1.minus(temp2.multiplication(tempList));
-        listResult.removeAll(Collections.singleton(null));
-
-        return listResult;
+    public Polynom remaindedD(Polynom polynom) {
+        List<Integer> list = new ArrayList<>();
+        Polynom temp2 = this.division(polynom);
+        Polynom polResult = this.substraction(polynom.multiplication(temp2));
+        return polResult;
     }
 
     @Override
