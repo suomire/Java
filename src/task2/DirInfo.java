@@ -3,66 +3,72 @@ package task2;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class DirInfo {
     private boolean r;
     private boolean h;
     private boolean l;
     private String o;
+    private File file;
+    private String finalPath;
 
-    private ArrayList<String> stringList = new ArrayList<>();
-    private ArrayList<String> lineList = new ArrayList<>();
+    private List<String> stringList = new ArrayList<>();
+    private List<String> lineList = new ArrayList<>();
 
-    public DirInfo(boolean r, boolean h, boolean l, String o) {
-        this.r = r;
-        this.h = h;
-        this.l = l;
-        this.o = o;
+    public DirInfo(boolean r, boolean h, boolean l, String o, File file) throws NoSuchFileException {
+        if (!file.exists()) {
+            throw new NoSuchFileException(file.getPath());
+        } else {
+            this.r = r;
+            this.h = h;
+            this.l = l;
+            this.o = o;
+            this.file = file;
+        }
+
     }
 
-    public void lineParserLaunch(File folder) {
+    public String lineParserLaunch(File folder) throws NoSuchFileException {
         stringList.clear();
-        File[] folderEntries = folder.listFiles();
-        if (folderEntries != null) {
-            for (File entry : folderEntries) {
-                InfoClass ic = new InfoClass(entry);
-                lineList.clear();
-                lineList.add(ic.getPath() + "\\");
-                if (this.h != this.l) {
-                    if (this.l) {
-                        lineList.add(ic.getRwx() + "\\");
-                        lineList.add(ic.getLength() + "\\");
-                    } else {
-                        lineList.add(RWX(ic.getRwx()) + "\\");
-                        lineList.add(converter(ic.getLength()) + "");
-                    }
-                    lineList.add(ic.getLastModify() + "");
+        if (folder.exists()) {
+            File[] folderEntries = folder.listFiles();
+            if (folderEntries != null) {
+                for (File entry : folderEntries) {
+                    InfoClass ic = new InfoClass(entry);
+                    additionalMethod(ic);
                 }
-                if (r) Collections.reverse(lineList);
-                stringList.add(lineList.toString());
+            } else {
+                InfoClass ic = new InfoClass(folder);
+                additionalMethod(ic);
             }
+            if (this.o.equals("")) {
+                finalPath = returnPath();
+            } else printOutput(this.o);
         } else {
-            InfoClass ic = new InfoClass(folder);
-            lineList.clear();
-            lineList.add(ic.getPath() + "\\");
-            if (this.h != this.l) {
-                if (this.l) {
-                    lineList.add(ic.getRwx() + "\\");
-                    lineList.add(ic.getLength() + "\\");
-                } else {
-                    lineList.add(RWX(ic.getRwx()) + "\\");
-                    lineList.add(converter(ic.getLength()) + "");
-                }
-                lineList.add(ic.getLastModify() + "");
-            }
-            if (r) Collections.reverse(lineList);
-            stringList.add(lineList.toString());
+            throw new NoSuchFileException(file.getPath());
         }
-        if (this.o.equals("")) {
-            printList();
-        } else printOutput(this.o);
+        return finalPath;
+    }
+
+    public void additionalMethod(InfoClass ic) {
+        lineList.clear();
+        lineList.add(ic.getPath() + "\\");
+        if (this.h != this.l) {
+            if (this.l) {
+                lineList.add(ic.getRwx() + "\\");
+                lineList.add(ic.getLength() + "\\");
+            } else {
+                lineList.add(convertorToRWXFormat(ic.getRwx()) + "\\");
+                lineList.add(converter(ic.getLength()) + "");
+            }
+            lineList.add(ic.getLastModify() + "");
+        }
+        if (r) Collections.reverse(lineList);
+        stringList.add(lineList.toString());
     }
 
 
@@ -114,7 +120,7 @@ public class DirInfo {
         return str;
     }
 
-    public String RWX(String rwx) {
+    public String convertorToRWXFormat(String rwx) {
         String str = "";
         switch (rwx) {
             case "000":
@@ -146,13 +152,13 @@ public class DirInfo {
         return str;
     }
 
-    public void printList() {
-        for (String line : stringList) {
-            for (String str : line.split(", ")) {
-                System.out.print(str + " ");
-            }
-            System.out.println();
+    public String returnPath() {
+        StringBuilder strPath = new StringBuilder();
+        for (int i = 0; i < stringList.size(); i++) {
+            stringList.set(i, stringList.get(i).replaceAll("[\\[\\]]", ""));
         }
-
+        strPath.append(stringList.toString()).deleteCharAt(0).deleteCharAt(
+                strPath.length()-1);
+        return strPath.toString();
     }
 }

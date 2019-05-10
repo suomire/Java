@@ -7,6 +7,7 @@ import org.kohsuke.args4j.Option;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 
 /**
  * Задача 2. Разработать консольную утилиту, реализующую указанную в задании функциональность,
@@ -57,20 +58,23 @@ public final class CLParser {
         new CLParser().launch(args);
     }
 
-    private void launch(String[] args) {
+    private String launch(String[] args) {
         CmdLineParser parser = new CmdLineParser(this);
+        String path = "";
         try {
             parser.parseArgument(args);
             File dir1 = new File(inputFileString);
-            DirInfo dirInfo = new DirInfo(reverseOut, hrFormat, longFormat, outputFileName);
+            DirInfo dirInfo = new DirInfo(reverseOut, hrFormat, longFormat, outputFileName, dir1);
             dirInfo.lineParserLaunch(dir1);
 
         } catch (CmdLineException e) {
             System.err.println(e.getMessage());
             System.err.println("java -jar Java_tasks.jar ls [-l] [-h] [-r] [-o output.file] directory_or_file");
             parser.printUsage(System.err);
+        } catch (NoSuchFileException e) {
+            e.printStackTrace();
+            System.out.println("Введенного файла не существует");
         }
-
-
+        return path;
     }
 }
