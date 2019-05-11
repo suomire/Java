@@ -62,7 +62,7 @@ public class DirInfo {
                 lineList.add(ic.getRwx() + "\\");
                 lineList.add(ic.getLength() + "\\");
             } else {
-                lineList.add(convertorToRWXFormat(ic.getRwx()) + "\\");
+                lineList.add(converterToRWXFormat(ic.getRwx()) + "\\");
                 lineList.add(converter(ic.getLength()) + "");
             }
             lineList.add(ic.getLastModify() + "");
@@ -74,13 +74,9 @@ public class DirInfo {
 
     public void printOutput(String outputFileName) {
         try {
+            String str = returnPath();
             FileWriter fl = new FileWriter(outputFileName, false);
-            for (String elem : stringList) {
-                for (String str : elem.split(", ")) {
-                    fl.write(str + " ");
-                }
-                fl.write("\r\n");
-            }
+            fl.write(str);
             fl.close();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -88,7 +84,7 @@ public class DirInfo {
     }
 
 
-    public String converter(Long bytes) {
+    public static String converter(Long bytes) {
         String str = "";
         double temp;
         double tBytes = bytes.doubleValue();
@@ -120,7 +116,7 @@ public class DirInfo {
         return str;
     }
 
-    public String convertorToRWXFormat(String rwx) {
+    public static String converterToRWXFormat(String rwx) {
         String str = "";
         switch (rwx) {
             case "000":
@@ -159,6 +155,7 @@ public class DirInfo {
         }
         strPath.append(stringList.toString()).deleteCharAt(0).deleteCharAt(
                 strPath.length()-1);
-        return strPath.toString();
+
+        return strPath.toString().replaceAll(",","");
     }
 }
